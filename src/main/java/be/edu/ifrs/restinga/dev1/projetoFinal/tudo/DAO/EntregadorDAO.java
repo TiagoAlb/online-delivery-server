@@ -6,8 +6,9 @@
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO;
 
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador;
-import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,13 +17,13 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface EntregadorDAO extends CrudRepository<Entregador, Integer>
+public interface EntregadorDAO extends PagingAndSortingRepository<Entregador, Integer>
 {
-    List<Entregador> findByNome(String nome);
+    Page<Entregador> findByNome(String nome, Pageable page);
     
-    List<Entregador> findByNomeContainingOrderByNome(String nome);
+    Page<Entregador> findByNomeContainingOrderByNome(String nome, Pageable page);
     
-    List<Entregador> findByCpf(String cpf);
+    Page<Entregador> findByCpf(String cpf, Pageable page);
     
-    List<Entregador> findByEmailContainingOrderByNome(String email);
+    Page<Entregador> findByEmailContainingOrderByNome(String email, Pageable page);
 }
