@@ -6,8 +6,10 @@
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.controller;
 
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO.UsuarioDAO;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador;
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +25,7 @@ public class UsuarioControll
     @Autowired
     UsuarioDAO usuarioDAO;
   
-    @RequestMapping(path="/usuario", method = RequestMethod.POST)
+    @RequestMapping(path="/usuarios", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario inserir(@RequestBody Usuario usuario)
     {
@@ -31,7 +33,7 @@ public class UsuarioControll
         Usuario usuarioSalvo = usuarioDAO.save(usuario);
         return usuarioSalvo;
     }   
-    
+    /*
     @RequestMapping(path = "/usuario/pesquisar/nome", method = RequestMethod.GET)
     public Iterable<Usuario> pesquisaPorNome(
             @RequestParam(required = false) String igual,
@@ -47,26 +49,26 @@ public class UsuarioControll
     public Iterable<Usuario> pesquisaPorMarcas(@RequestParam(required = false) String igual) {
             return usuarioDAO.findByCpf(igual);
     }
-    
-    @RequestMapping(path="/usuario/{id}", method = RequestMethod.GET)
-    public Usuario encontrar(@PathVariable int id)
+    */
+    @RequestMapping(path="/usuarios/{id}", method = RequestMethod.GET)
+    public Usuario recuperar(@PathVariable int id)
     {
         return usuarioDAO.findOne(id); 
     }
-    
+    /*
     @RequestMapping(path="/usuario/pesquisar/email", method = RequestMethod.GET)
     public Iterable<Usuario> pesquisarPorEmail(@RequestParam String email)
     {
         return usuarioDAO.findByEmailContainingOrderByNome(email);
-    }
+    }*/
     
     @RequestMapping(path = "/usuarios", method = RequestMethod.GET)
-    public Iterable<Usuario> listar() 
-    {
-        return usuarioDAO.findAll();
+    public Iterable<Usuario> listar(@RequestParam(required = false, defaultValue = "0") int page) {
+        PageRequest pageRequest = new PageRequest(page, 10); 
+        return usuarioDAO.findAll(pageRequest);
     }
     
-    @RequestMapping(path= "/usuario/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path= "/usuarios/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void apagar(@PathVariable int id) 
     {
@@ -76,7 +78,7 @@ public class UsuarioControll
         }
     }
         
-    @RequestMapping(path = "/usuario/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/usuarios/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@PathVariable int id, @RequestBody Usuario usuario)
     {

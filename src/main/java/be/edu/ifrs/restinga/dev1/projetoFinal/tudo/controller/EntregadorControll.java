@@ -8,6 +8,7 @@ package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.controller;
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO.EntregadorDAO;
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,9 +41,9 @@ public class EntregadorControll
     }
     
     @RequestMapping(path = "/entregadores", method = RequestMethod.GET)
-    public Iterable<Entregador> listar() 
-    {
-        return entregadorDAO.findAll();
+    public Iterable<Entregador> listar(@RequestParam(required = false, defaultValue = "0") int page) {
+        PageRequest pageRequest = new PageRequest(page, 10); 
+        return entregadorDAO.findAll(pageRequest);
     }
     
     @RequestMapping(path= "/entregadores/{id}", method = RequestMethod.DELETE)

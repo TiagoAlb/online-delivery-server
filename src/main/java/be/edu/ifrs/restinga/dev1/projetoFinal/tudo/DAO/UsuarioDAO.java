@@ -6,8 +6,9 @@
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO;
 
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario;
-import java.util.List;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,15 +16,15 @@ import org.springframework.stereotype.Repository;
  * @author cassi
  */
 @Repository
-public interface UsuarioDAO extends CrudRepository<Usuario, Integer>
+public interface UsuarioDAO extends PagingAndSortingRepository<Usuario, Integer>
 {
-    List<Usuario> findByNome(String nome);
+    Page<Usuario> findByNome(String nome, Pageable page);
     
-    List<Usuario> findByNomeContainingOrderByNome(String nome);
+    Page<Usuario> findByNomeContainingOrderByNome(String nome, Pageable page);
     
-    List<Usuario> findByCpf(String cpf);
+    Page<Usuario> findByCpf(String cpf, Pageable page);
     
-    List<Usuario> findByEmailContainingOrderByNome(String email);
+    Page<Usuario> findByEmailContainingOrderByNome(String email, Pageable page);
     
 }
     
