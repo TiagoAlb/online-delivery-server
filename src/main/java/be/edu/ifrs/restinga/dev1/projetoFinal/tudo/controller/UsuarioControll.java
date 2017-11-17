@@ -25,7 +25,7 @@ public class UsuarioControll
     @Autowired
     UsuarioDAO usuarioDAO;
   
-    @RequestMapping(path="/usuarios", method = RequestMethod.POST)
+    @RequestMapping(path="/api/usuarios", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario inserir(@RequestBody Usuario usuario)
     {
@@ -50,7 +50,7 @@ public class UsuarioControll
             return usuarioDAO.findByCpf(igual);
     }
     */
-    @RequestMapping(path="/usuarios/{id}", method = RequestMethod.GET)
+    @RequestMapping(path="/api/usuarios/{id}", method = RequestMethod.GET)
     public Usuario recuperar(@PathVariable int id)
     {
         return usuarioDAO.findOne(id); 
@@ -62,13 +62,13 @@ public class UsuarioControll
         return usuarioDAO.findByEmailContainingOrderByNome(email);
     }*/
     
-    @RequestMapping(path = "/usuarios", method = RequestMethod.GET)
+    @RequestMapping(path = "/api/usuarios", method = RequestMethod.GET)
     public Iterable<Usuario> listar(@RequestParam(required = false, defaultValue = "0") int page) {
         PageRequest pageRequest = new PageRequest(page, 10); 
         return usuarioDAO.findAll(pageRequest);
     }
     
-    @RequestMapping(path= "/usuarios/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path= "/api/usuarios/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void apagar(@PathVariable int id) 
     {
@@ -78,7 +78,7 @@ public class UsuarioControll
         }
     }
         
-    @RequestMapping(path = "/usuarios/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/api/usuarios/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@PathVariable int id, @RequestBody Usuario usuario)
     {

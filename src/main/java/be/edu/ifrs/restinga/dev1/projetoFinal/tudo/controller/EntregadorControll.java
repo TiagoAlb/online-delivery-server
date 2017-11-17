@@ -25,7 +25,7 @@ public class EntregadorControll
     EntregadorDAO entregadorDAO;
     
   
-    @RequestMapping(path="/entregadores", method = RequestMethod.POST)
+    @RequestMapping(path="/api/entregadores", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Entregador inserir(@RequestBody Entregador entregador)
     {
@@ -34,19 +34,19 @@ public class EntregadorControll
         return entregadorSalvo;
     }   
     
-    @RequestMapping(path="/entregadores/{id}", method = RequestMethod.GET)
+    @RequestMapping(path="/api/entregadores/{id}", method = RequestMethod.GET)
     public Entregador recuperar(@PathVariable int id)
     {
         return entregadorDAO.findOne(id); 
     }
     
-    @RequestMapping(path = "/entregadores", method = RequestMethod.GET)
+    @RequestMapping(path = "/api/entregadores", method = RequestMethod.GET)
     public Iterable<Entregador> listar(@RequestParam(required = false, defaultValue = "0") int page) {
         PageRequest pageRequest = new PageRequest(page, 10); 
         return entregadorDAO.findAll(pageRequest);
     }
     
-    @RequestMapping(path= "/entregadores/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path= "/api/entregadores/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void apagar(@PathVariable int id) 
     {
@@ -56,7 +56,7 @@ public class EntregadorControll
         }
     }
         
-    @RequestMapping(path = "/entregadores/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/api/entregadores/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@PathVariable int id, @RequestBody Entregador entregador)
     {
