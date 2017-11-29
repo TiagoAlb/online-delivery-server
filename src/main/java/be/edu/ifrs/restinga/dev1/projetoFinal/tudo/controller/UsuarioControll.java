@@ -6,8 +6,8 @@
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.controller;
 
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO.UsuarioDAO;
-import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador;
-import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador.Entregador;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;

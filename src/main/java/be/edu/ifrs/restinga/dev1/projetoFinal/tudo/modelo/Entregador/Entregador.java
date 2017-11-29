@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo;
+package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador;
 
 import java.util.List;
 import javax.persistence.ElementCollection;
@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * @author cassi
  */
 @Entity
-public class Usuario 
+public class Entregador 
 {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,12 @@ public class Usuario
    private int id;
    private String nome;
    private String cpf;
+   private String rg;
    private String email;
+   private String cnh;
+   private String crlv;
+   private String endereco;
+   
    
    @ElementCollection
    private List<String> telefones;
@@ -38,6 +43,22 @@ public class Usuario
         this.id = id;
     }
 
+    public String getCnh() {
+        return cnh;
+    }
+
+    public void setCnh(String cnh) {
+        this.cnh = cnh;
+    }
+
+    public String getCrlv() {
+        return crlv;
+    }
+
+    public void setCrlv(String crlv) {
+        this.crlv = crlv;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -52,6 +73,14 @@ public class Usuario
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
     }
 
     public String getEmail() {
@@ -69,10 +98,16 @@ public class Usuario
     public void setTelefones(List<String> telefones) {
         this.telefones = telefones;
     }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
    
    
     
  
-    
-    
 }

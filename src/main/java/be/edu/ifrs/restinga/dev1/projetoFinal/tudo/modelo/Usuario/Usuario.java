@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo;
+package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario;
 
 import java.util.List;
 import javax.persistence.ElementCollection;
@@ -17,7 +17,7 @@ import javax.persistence.Id;
  * @author cassi
  */
 @Entity
-public class Entregador 
+public class Usuario 
 {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +25,7 @@ public class Entregador
    private int id;
    private String nome;
    private String cpf;
-   private String rg;
    private String email;
-   private String cnh;
-   private String crlv;
-   
    
    @ElementCollection
    private List<String> telefones;
@@ -42,22 +38,6 @@ public class Entregador
         this.id = id;
     }
 
-    public String getCnh() {
-        return cnh;
-    }
-
-    public void setCnh(String cnh) {
-        this.cnh = cnh;
-    }
-
-    public String getCrlv() {
-        return crlv;
-    }
-
-    public void setCrlv(String crlv) {
-        this.crlv = crlv;
-    }
-    
     public String getNome() {
         return nome;
     }
@@ -72,14 +52,6 @@ public class Entregador
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
     }
 
     public String getEmail() {
@@ -101,4 +73,6 @@ public class Entregador
    
     
  
+    
+    
 }

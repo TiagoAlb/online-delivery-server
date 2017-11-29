@@ -5,7 +5,7 @@
  */
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO;
 
-import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador.Entregador;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario.Solicitacao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -13,17 +13,13 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author jezer
+ * @author Tiago
  */
-
 @Repository
-public interface EntregadorDAO extends PagingAndSortingRepository<Entregador, Integer>
+public interface SolicitacaoDAO extends PagingAndSortingRepository<Solicitacao, Integer>
 {
-    Page<Entregador> findByNome(String nome, Pageable page);
+    Page<Solicitacao> findById(int id, Pageable page);
     
-    Page<Entregador> findByNomeContainingOrderByNome(String nome, Pageable page);
-    
-    Page<Entregador> findByCpf(String cpf, Pageable page);
-    
-    Page<Entregador> findByEmailContainingOrderByNome(String email, Pageable page);
 }
+    
+
