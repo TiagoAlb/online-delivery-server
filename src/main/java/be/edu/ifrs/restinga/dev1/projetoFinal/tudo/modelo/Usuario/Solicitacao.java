@@ -22,7 +22,31 @@ public class Solicitacao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     
     private int id;
-    private String enderecousuario, enderecoentregador;
+    private String enderecousuario, enderecoentregador, tempo, distancia, modoentrega, status="Aguardando Aceitação";
+    
+    public String getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(String tempo) {
+        this.tempo = tempo;
+    }
+
+    public String getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(String distancia) {
+        this.distancia = distancia;
+    }
+
+    public String getModoentrega() {
+        return modoentrega;
+    }
+
+    public void setModoentrega(String modoentrega) {
+        this.modoentrega = modoentrega;
+    }
     private double custo;
 
     public int getId() {
@@ -56,4 +80,13 @@ public class Solicitacao {
     public void setCusto(double custo) {
         this.custo = custo;
     }  
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
