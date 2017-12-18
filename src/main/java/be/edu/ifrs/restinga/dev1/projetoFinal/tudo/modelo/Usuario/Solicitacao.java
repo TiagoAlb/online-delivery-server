@@ -22,7 +22,7 @@ public class Solicitacao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     
     private int id;
-    private String enderecousuario, enderecoentregador, tempo, distancia, modoentrega, status="Aguardando Aceitação";
+    private String enderecobusca, enderecoentrega, tempo, distancia, modoentrega, status="Aguardando Aceitação";
     
     public String getTempo() {
         return tempo;
@@ -57,22 +57,6 @@ public class Solicitacao {
         this.id = id;
     }
 
-    public String getEnderecousuario() {
-        return enderecousuario;
-    }
-
-    public void setEnderecousuario(String enderecousuario) {
-        this.enderecousuario = enderecousuario;
-    }
-
-    public String getEnderecoentregador() {
-        return enderecoentregador;
-    }
-
-    public void setEnderecoentregador(String enderecoentregador) {
-        this.enderecoentregador = enderecoentregador;
-    }
-
     public double getCusto() {
         return custo;
     }
@@ -87,6 +71,22 @@ public class Solicitacao {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getEnderecobusca() {
+        return enderecobusca;
+    }
+
+    public void setEnderecobusca(String enderecobusca) {
+        this.enderecobusca = enderecobusca;
+    }
+
+    public String getEnderecoentrega() {
+        return enderecoentrega;
+    }
+
+    public void setEnderecoentrega(String enderecoentrega) {
+        this.enderecoentrega = enderecoentrega;
     }
 
 }
