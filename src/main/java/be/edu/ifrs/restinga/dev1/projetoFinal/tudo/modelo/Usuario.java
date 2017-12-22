@@ -32,8 +32,6 @@ public class Usuario
    private String cpf;
    private String email;
    
-   @ElementCollection
-   private List<String> telefones;
    
     @Column(unique=true)
     private String login;
@@ -78,14 +76,6 @@ public class Usuario
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<String> getTelefones() {
-        return telefones;
-    }
-
-    public void setTelefones(List<String> telefones) {
-        this.telefones = telefones;
     }
    
     public String getLogin() {

@@ -27,7 +27,7 @@ public class SolicitacaoControll
     @Autowired
     SolicitacaoDAO solicitacaoDAO;
   
-    @PreAuthorize("hasAuthority('usuario')")
+    @PreAuthorize("hasAuthority('usuario') OR hasAuthority('administrador')")
     @RequestMapping(path="/solicitacao", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Solicitacao inserir(@RequestBody Solicitacao solicitacao)

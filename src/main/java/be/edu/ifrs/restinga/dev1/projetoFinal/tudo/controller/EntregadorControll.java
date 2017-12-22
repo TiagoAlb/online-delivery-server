@@ -90,7 +90,12 @@ public class EntregadorControll {
         if (entregadorDAO.exists(id)) {
             entregadorDAO.delete(id);
         }
-
     }
+    
+    @RequestMapping(path = "/entregadores/login", method = RequestMethod.GET)
+    public Entregador login(@AuthenticationPrincipal EntregadorAut EntregadorAut) {
+        return EntregadorAut.getEntregador();
+    
+    } 
 
 }

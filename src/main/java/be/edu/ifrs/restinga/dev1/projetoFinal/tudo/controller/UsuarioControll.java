@@ -92,5 +92,13 @@ public class UsuarioControll {
         }
 
     }
+    
+    @RequestMapping(path = "/usuarios/login", method = RequestMethod.GET)
+    public Usuario login(@AuthenticationPrincipal UsuarioAut usuarioAut) {
+        return usuarioAut.getUsuario();
+    
+    } 
+    
+    
 
 }
