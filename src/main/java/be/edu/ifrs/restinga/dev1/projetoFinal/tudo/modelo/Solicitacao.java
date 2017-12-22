@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario;
+package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

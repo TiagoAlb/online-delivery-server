@@ -6,10 +6,11 @@
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.controller;
 
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO.SolicitacaoDAO;
-import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario.Solicitacao;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Solicitacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,7 +77,8 @@ public class SolicitacaoControll
             solicitacaoDAO.delete(id);
         }
     }
-        
+    
+    @PreAuthorize("hasAuthority('entregador') OR hasAuthority('administrador')")
     @RequestMapping(path = "/api/solicitacao/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@PathVariable int id, @RequestBody Solicitacao solicitacao)

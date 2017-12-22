@@ -5,7 +5,7 @@
  */
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO;
 
-import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario.Solicitacao;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Solicitacao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

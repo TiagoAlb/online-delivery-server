@@ -5,12 +5,18 @@
  */
 package be.edu.ifrs.restinga.dev1.projetoFinal.tudo.controller;
 
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.aut.ForbiddenException;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.aut.UsuarioAut;
 import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.DAO.UsuarioDAO;
-import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Entregador.Entregador;
-import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario.Usuario;
+import be.edu.ifrs.restinga.dev1.projetoFinal.tudo.modelo.Usuario;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,73 +25,72 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ *
+ * @author jezer
+ */
+
 @RestController
-public class UsuarioControll 
-{
-    @Autowired
-    UsuarioDAO usuarioDAO;
-  
-    @RequestMapping(path="/api/usuarios", method = RequestMethod.POST)
+@RequestMapping(path = "/api")
+public class UsuarioControll {
+
+    public static final PasswordEncoder 
+            PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
+    @RequestMapping(path = "/usuarios", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario inserir(@RequestBody Usuario usuario)
-    {
+    public Usuario inserir(@AuthenticationPrincipal UsuarioAut usuarioAut, @RequestBody Usuario usuario) {
         usuario.setId(0);
+        usuario.setSenha(PASSWORD_ENCODER.encode(usuario.getNovaSenha()));
+
+        if (usuarioAut == null || !usuarioAut.getUsuario().getPermissoes().contains("administrador")) {
+            ArrayList<String> permissao = new ArrayList<String>();
+            permissao.add("usuario");
+            usuario.setPermissoes(permissao);
+        }
         Usuario usuarioSalvo = usuarioDAO.save(usuario);
         return usuarioSalvo;
-    }   
-    /*
-    @RequestMapping(path = "/usuario/pesquisar/nome", method = RequestMethod.GET)
-    public Iterable<Usuario> pesquisaPorNome(
-            @RequestParam(required = false) String igual,
-            @RequestParam(required = false) String contem) {
-        if(igual!=null){
-            return usuarioDAO.findByNome(igual);
-        } else {
-            return usuarioDAO.findByNomeContainingOrderByNome(contem);
-        }
     }
-    
-    @RequestMapping(path = "/produtos/pesquisar/cpf", method = RequestMethod.GET)
-    public Iterable<Usuario> pesquisaPorMarcas(@RequestParam(required = false) String igual) {
-            return usuarioDAO.findByCpf(igual);
-    }
-    */
-    @RequestMapping(path="/api/usuarios/{id}", method = RequestMethod.GET)
-    public Usuario recuperar(@PathVariable int id)
-    {
-        return usuarioDAO.findOne(id); 
-    }
-    /*
-    @RequestMapping(path="/usuario/pesquisar/email", method = RequestMethod.GET)
-    public Iterable<Usuario> pesquisarPorEmail(@RequestParam String email)
-    {
-        return usuarioDAO.findByEmailContainingOrderByNome(email);
-    }*/
-    
-    @RequestMapping(path = "/api/usuarios", method = RequestMethod.GET)
-    public Iterable<Usuario> listar(@RequestParam(required = false, defaultValue = "0") int page) {
-        PageRequest pageRequest = new PageRequest(page, 10); 
+  
+    @Autowired
+    UsuarioDAO usuarioDAO;
+
+    @PreAuthorize("hasAuthority('administrador')")
+    @RequestMapping(path = "/usuarios", method = RequestMethod.GET)
+    public Iterable<Usuario> listar(@RequestParam(required = false, defaultValue = "0") int pagina) {
+        PageRequest pageRequest = new PageRequest(pagina, 5);
         return usuarioDAO.findAll(pageRequest);
     }
-    
-    @RequestMapping(path= "/api/usuarios/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
-    public void apagar(@PathVariable int id) 
-    {
-        if(usuarioDAO.exists(id))
-        {
-            usuarioDAO.delete(id);
+
+
+    @RequestMapping(path = "/usuarios/{id}", method = RequestMethod.GET)
+    public Usuario recuperar(@AuthenticationPrincipal UsuarioAut usuarioAut, @PathVariable int id) {
+        if (usuarioAut.getUsuario().getId() == id 
+                || usuarioAut.getUsuario().getPermissoes().contains("administrador")) {
+            return usuarioDAO.findOne(id);
+        } else {
+            throw new ForbiddenException("Não é permitido acessar dados de outro usuários");
         }
     }
-        
-    @RequestMapping(path = "/api/usuarios/{id}", method = RequestMethod.PUT)
+
+    @PreAuthorize("hasAuthority('usuario')")
+    @RequestMapping(path = "/usuarios/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void atualizar(@PathVariable int id, @RequestBody Usuario usuario)
-    {
-        if(usuarioDAO.exists(id))
-        {
+    public void atualizar(@PathVariable int id, @RequestBody Usuario usuario) {
+        if (usuarioDAO.exists(id)) {
             usuario.setId(id);
             usuarioDAO.save(usuario);
         }
-    } 
+    }
+
+    @PreAuthorize("hasAuthority('usuario')")
+    @RequestMapping(path = "/usuarios/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
+    public void apagar(@PathVariable int id) {
+        if (usuarioDAO.exists(id)) {
+            usuarioDAO.delete(id);
+        }
+
+    }
+
 }
