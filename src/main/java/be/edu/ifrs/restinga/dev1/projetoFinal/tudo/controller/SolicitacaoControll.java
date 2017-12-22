@@ -19,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
+@RequestMapping(path = "/api")
 public class SolicitacaoControll 
 {
     @Autowired
     SolicitacaoDAO solicitacaoDAO;
   
-    @RequestMapping(path="/api/solicitacao", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('usuario')")
+    @RequestMapping(path="/solicitacao", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Solicitacao inserir(@RequestBody Solicitacao solicitacao)
     {
@@ -50,7 +53,7 @@ public class SolicitacaoControll
             return usuarioDAO.findByCpf(igual);
     }
     */
-    @RequestMapping(path="/api/solicitacao/{id}", method = RequestMethod.GET)
+    @RequestMapping(path="/solicitacao/{id}", method = RequestMethod.GET)
     public Solicitacao recuperar(@PathVariable int id)
     {
         return solicitacaoDAO.findOne(id); 
@@ -62,13 +65,13 @@ public class SolicitacaoControll
         return usuarioDAO.findByEmailContainingOrderByNome(email);
     }*/
     
-    @RequestMapping(path = "/api/solicitacao", method = RequestMethod.GET)
+    @RequestMapping(path = "/solicitacao", method = RequestMethod.GET)
     public Iterable<Solicitacao> listar(@RequestParam(required = false, defaultValue = "0") int page) {
         PageRequest pageRequest = new PageRequest(page, 10); 
         return solicitacaoDAO.findAll(pageRequest);
     }
     
-    @RequestMapping(path= "/api/solicitacao/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path= "/solicitacao/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void apagar(@PathVariable int id) 
     {
@@ -79,7 +82,7 @@ public class SolicitacaoControll
     }
     
     @PreAuthorize("hasAuthority('entregador') OR hasAuthority('administrador')")
-    @RequestMapping(path = "/api/solicitacao/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "/solicitacao/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@PathVariable int id, @RequestBody Solicitacao solicitacao)
     {
