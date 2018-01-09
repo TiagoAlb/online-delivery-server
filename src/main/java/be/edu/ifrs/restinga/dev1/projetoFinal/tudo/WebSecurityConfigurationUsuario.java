@@ -27,32 +27,25 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfigurationUsuario extends WebSecurityConfigurerAdapter{
     @Autowired
     DetailsServiceUsuario detailsServiceUsuario;
-    @Autowired
-    DetailsServiceEntregador detailsServiceEntregador;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(detailsServiceUsuario)
                 .passwordEncoder(UsuarioControll.PASSWORD_ENCODER);
-        auth.userDetailsService(detailsServiceEntregador)
-                .passwordEncoder(EntregadorControll.PASSWORD_ENCODER);
     }
     
     @Override
     public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers(HttpMethod.POST,"/api/usuarios/");
-    web.ignoring().antMatchers(HttpMethod.POST,"/api/usuarios/**");
-    web.ignoring().antMatchers(HttpMethod.GET,"/api/usuarios/login");
+    web.ignoring().antMatchers(HttpMethod.POST,"/api/usuarios/user");
     //web.ignoring().antMatchers(HttpMethod.POST,"/api/imgs/**");
 }
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/usuarios/").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/usuarios/login/**").permitAll()
+                
                 .antMatchers("/api/**").authenticated()
                 .and().httpBasic().and()
                 .sessionManagement()

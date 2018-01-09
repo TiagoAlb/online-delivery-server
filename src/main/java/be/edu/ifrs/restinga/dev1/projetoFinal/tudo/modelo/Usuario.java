@@ -32,6 +32,10 @@ public class Usuario
    private String cpf;
    private String email;
    
+   private String rg;
+   private String cnh;
+   private String crlv;
+   private String endereco;
    
     @Column(unique=true)
     private String login;
@@ -45,7 +49,7 @@ public class Usuario
     
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> permissoes;   
-
+    
     public int getId() {
         return id;
     }
@@ -54,6 +58,22 @@ public class Usuario
         this.id = id;
     }
 
+    public String getCnh() {
+        return cnh;
+    }
+
+    public void setCnh(String cnh) {
+        this.cnh = cnh;
+    }
+
+    public String getCrlv() {
+        return crlv;
+    }
+
+    public void setCrlv(String crlv) {
+        this.crlv = crlv;
+    }
+    
     public String getNome() {
         return nome;
     }
@@ -70,12 +90,28 @@ public class Usuario
         this.cpf = cpf;
     }
 
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
    
     public String getLogin() {

@@ -37,9 +37,9 @@ public class UsuarioControll {
     public static final PasswordEncoder 
             PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
-    @RequestMapping(path = "/usuarios", method = RequestMethod.POST)
+    @RequestMapping(path = "/usuarios/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario inserir(@AuthenticationPrincipal UsuarioAut usuarioAut, @RequestBody Usuario usuario) {
+    public Usuario inserirUsuario(@AuthenticationPrincipal UsuarioAut usuarioAut, @RequestBody Usuario usuario) {
         usuario.setId(0);
         usuario.setSenha(PASSWORD_ENCODER.encode(usuario.getNovaSenha()));
 
@@ -48,6 +48,21 @@ public class UsuarioControll {
             permissao.add("usuario");
             usuario.setPermissoes(permissao);
         }
+        Usuario usuarioSalvo = usuarioDAO.save(usuario);
+        return usuarioSalvo;
+    }
+    
+    @PreAuthorize("hasAuthority('administrador')")
+    @RequestMapping(path = "/usuarios/entregador", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Usuario inserirEntregador(@AuthenticationPrincipal UsuarioAut usuarioAut, @RequestBody Usuario usuario) {
+        usuario.setId(0);
+        usuario.setSenha(PASSWORD_ENCODER.encode(usuario.getNovaSenha()));
+
+            ArrayList<String> permissao = new ArrayList<String>();
+            permissao.add("entregador");
+            usuario.setPermissoes(permissao);
+        
         Usuario usuarioSalvo = usuarioDAO.save(usuario);
         return usuarioSalvo;
     }
@@ -73,7 +88,7 @@ public class UsuarioControll {
         }
     }
 
-    @PreAuthorize("hasAuthority('usuario')")
+    @PreAuthorize("hasAuthority('administrador')")
     @RequestMapping(path = "/usuarios/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@PathVariable int id, @RequestBody Usuario usuario) {
@@ -83,7 +98,7 @@ public class UsuarioControll {
         }
     }
 
-    @PreAuthorize("hasAuthority('usuario')")
+    @PreAuthorize("hasAuthority('administrador')")
     @RequestMapping(path = "/usuarios/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void apagar(@PathVariable int id) {
@@ -94,10 +109,9 @@ public class UsuarioControll {
     }
     
     @RequestMapping(path = "/usuarios/login", method = RequestMethod.GET)
-    public Usuario login(@AuthenticationPrincipal UsuarioAut usuarioAut) {
-        return usuarioAut.getUsuario();
-    
-    } 
+    public Usuario login(@AuthenticationPrincipal UsuarioAut userAut) {
+        return userAut.getUsuario();
+    }
     
     
 
